@@ -3,7 +3,9 @@ package main
 import "fmt"
 
 func main(){
-	fmt.Printf("%s", reverseString("riya"))
+	fmt.Printf("%s\n", reverseString("riya"))
+	fmt.Printf("%v\n", hasPrefix("Mr", "Mr John"))
+	fmt.Printf("%v\n", hasPrefix("Mr", "M John"))
 }
 
 func reverseString(s string) string{
@@ -12,4 +14,8 @@ func reverseString(s string) string{
 		runes[j], runes[i]= runes[i], runes[j]
 	}
 	return string(runes)
+}
+
+func hasPrefix(prefix, s string) bool{
+	return len(s) >= len(prefix) && s[:len(prefix)] == prefix
 }
