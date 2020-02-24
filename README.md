@@ -1,0 +1,1 @@
+Exercises from **The Go Programming Language** by Brian Kernighan, Alan A. A. Donovan 
