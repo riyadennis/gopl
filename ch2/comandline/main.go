@@ -1,10 +1,10 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"io"
+	"io/ioutil"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -13,16 +13,18 @@ func main() {
 	// other than the first one.
 	files := os.Args[1:]
 	if len(files) < 0 {
-		countLines(os.Stdin, counts)
+		fmt.Fprint(os.Stderr, "no files to read")
+		return
 	} else {
 		for _, file := range files {
-			f, err := os.Open(file)
+			f, err := ioutil.ReadFile(file)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "%v\n", err)
 				continue
 			}
-			countLines(f, counts)
-			f.Close()
+			for _, l := range strings.Split(string(f), "\n"){
+				counts[l]++
+			}
 		}
 	}
 	for line, count := range counts {
@@ -32,12 +34,3 @@ func main() {
 	}
 }
 
-func countLines(f *os.File, counts map[string]int) {
-	scanner := bufio.NewScanner(f)
-	for scanner.Scan() {
-		if scanner.Err() == io.EOF{
-			break
-		}
-		counts[scanner.Text()]++
-	}
-}
